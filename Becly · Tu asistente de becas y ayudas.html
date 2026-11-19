@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Becly · Tu asistente de becas y ayudas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@1,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070916;--card:rgba(255,255,255,.06);--tx:#eef0ff;--mut:#9aa0c8;--bd:rgba(255,255,255,.12);--ac:#7c7cff;--ac2:#22e1c9;--ac3:#ff5fd2;--glow:rgba(124,124,255,.35);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f1f2fb;--card:rgba(255,255,255,.75);--tx:#14162b;--mut:#585c7e;--bd:rgba(20,22,60,.12);--glow:rgba(100,100,255,.25);color-scheme:light}}
+:root[data-theme="light"]{--bg:#f1f2fb;--card:rgba(255,255,255,.75);--tx:#14162b;--mut:#585c7e;--bd:rgba(20,22,60,.12);--glow:rgba(100,100,255,.25);color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:clamp(15px,.55vw + 11px,24px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:1rem/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-x:hidden;min-height:100vh}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(600px circle at var(--mx,50%) var(--my,30%),var(--glow),transparent 60%)}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:fl 18s ease-in-out infinite alternate}
+.o1{width:46vmax;height:46vmax;background:var(--ac);left:-12vmax;top:-14vmax}
+.o2{width:38vmax;height:38vmax;background:var(--ac2);right:-12vmax;top:20vh;animation-delay:-6s}
+.o3{width:34vmax;height:34vmax;background:var(--ac3);left:30vw;bottom:-18vmax;animation-delay:-11s;opacity:.35}
+@keyframes fl{to{transform:translate(6vmax,5vmax) scale(1.15)}}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--bd) 1px,transparent 1px),linear-gradient(90deg,var(--bd) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 20%,#000,transparent 70%);opacity:.5}
+.ring{position:fixed;width:34px;height:34px;border:2px solid var(--ac2);border-radius:50%;pointer-events:none;z-index:50;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;opacity:0;mix-blend-mode:screen}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(14px,3vw,40px) 60px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font-weight:800;font-size:1.25rem;letter-spacing:-.02em}
+.logo i{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:5px;backdrop-filter:blur(14px)}
+.tabs button{border:0;background:transparent;color:var(--mut);padding:9px 18px;border-radius:99px;font:inherit;font-weight:600;cursor:pointer}
+.tabs button.on{background:linear-gradient(90deg,var(--ac),var(--ac3));color:#fff;box-shadow:0 6px 24px var(--glow)}
+.brand{position:relative;display:inline-block;padding:12px 30px;line-height:1}
+.bt{position:relative;display:block;font-family:"Exo 2","Arial Black",system-ui,sans-serif;font-style:italic;font-weight:900;font-size:clamp(2rem,4.4vw,2.9rem);letter-spacing:-.02em;background-image:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.95) 50%,transparent 58%),linear-gradient(90deg,#00b8ff 0%,#1f6bff 40%,#3b3bff 62%,#9a5cff 100%);background-size:250% 100%,100% 100%;background-repeat:no-repeat;background-position:100% 0,0 0;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px rgba(40,140,255,.65)) drop-shadow(0 0 26px rgba(120,80,255,.35));animation:sh 4.5s ease-in-out infinite,pg 3s ease-in-out infinite alternate}
+@keyframes sh{0%,30%{background-position:100% 0,0 0}70%,100%{background-position:0% 0,0 0}}
+@keyframes pg{to{filter:drop-shadow(0 0 16px rgba(40,160,255,.9)) drop-shadow(0 0 36px rgba(140,90,255,.5))}}
+.st{position:absolute;height:2px;border-radius:2px;pointer-events:none}
+.s1{left:-4px;top:26%;width:120px;background:linear-gradient(90deg,transparent,#37c8ff);box-shadow:0 0 12px #25b6ff;animation:s1 3.2s ease-in-out infinite}
+.s2{right:-4px;bottom:18%;width:150px;background:linear-gradient(90deg,#a86bff,transparent);box-shadow:0 0 12px #8a4dff;animation:s2 3.8s ease-in-out infinite .8s}
+@keyframes s1{0%{transform:translateX(-30px) scaleX(.3);opacity:0}40%{opacity:1}100%{transform:translateX(30px) scaleX(1);opacity:0}}
+@keyframes s2{0%{transform:translateX(30px) scaleX(.3);opacity:0}40%{opacity:1}100%{transform:translateX(-30px) scaleX(1);opacity:0}}
+.tr{position:absolute;width:7px;height:7px;margin:-3.5px;border-radius:50%;pointer-events:none;animation:tr 7s linear infinite}
+.t1{background:#4cd2ff;box-shadow:0 0 10px 3px #1fb5ff,0 0 24px 6px rgba(31,181,255,.5)}
+.t2{background:#b887ff;box-shadow:0 0 10px 3px #8a4dff,0 0 24px 6px rgba(138,77,255,.5);animation-delay:-3.5s}
+@keyframes tr{0%{left:0;top:0}25%{left:100%;top:0}50%{left:100%;top:100%}75%{left:0;top:100%}100%{left:0;top:0}}
+.tw{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #6fb4ff;opacity:0;pointer-events:none;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%{opacity:0;transform:translateY(6px) scale(.5)}50%{opacity:1;transform:translateY(-6px) scale(1.2)}100%{opacity:0;transform:translateY(-16px) scale(.5)}}
+.hero{text-align:center;padding:clamp(24px,6vh,70px) 0 30px}
+.badge{display:inline-block;padding:6px 14px;border:1px solid var(--bd);border-radius:99px;background:var(--card);font-size:.85rem;color:var(--ac2);backdrop-filter:blur(10px)}
+.hero h1{font-size:clamp(2rem,6.2vw,4.4rem);line-height:1.04;letter-spacing:-.04em;margin:18px 0 14px}
+.hero h1 span{background:linear-gradient(90deg,var(--ac),var(--ac2),var(--ac3),var(--ac));background-size:300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gr 6s linear infinite}
+@keyframes gr{to{background-position:300%}}
+.hero p{max-width:640px;margin:0 auto;color:var(--mut);font-size:1.15rem}
+.glass{background:var(--card);border:1px solid var(--bd);border-radius:26px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 30px 80px -30px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08)}
+.bot{max-width:820px;margin:10px auto 0;padding:clamp(18px,3vw,34px);min-height:360px;position:relative}
+.prog{height:6px;border-radius:9px;background:var(--bd);overflow:hidden;margin-bottom:22px}
+.prog b{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .5s;border-radius:9px;box-shadow:0 0 14px var(--ac2)}
+.msg{display:flex;gap:14px;align-items:flex-start;animation:up .5s both}
+.av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;background:linear-gradient(135deg,var(--ac),var(--ac3));box-shadow:0 0 0 4px var(--glow);animation:pu 2.6s infinite}
+@keyframes pu{50%{box-shadow:0 0 0 10px transparent}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.q{font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:700;letter-spacing:-.02em;margin:6px 0 4px}
+.hint{color:var(--mut);font-size:.95rem;margin:0}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:12px;margin:22px 0 6px}
+.opt{position:relative;text-align:left;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:18px;padding:16px 18px;font:inherit;font-weight:600;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;overflow:hidden;min-height:56px}
+.opt:hover,.opt:focus-visible{border-color:var(--ac2);transform:translateY(-3px);box-shadow:0 14px 34px -10px var(--glow);outline:0}
+.opt.on{border-color:var(--ac2);background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 30%,transparent),color-mix(in srgb,var(--ac2) 20%,transparent))}
+.opt small{display:block;font-weight:400;color:var(--mut);margin-top:2px}
+.act{display:flex;gap:10px;justify-content:space-between;margin-top:20px;flex-wrap:wrap}
+.btn,.ghost{font:inherit;font-weight:700;border-radius:14px;padding:13px 22px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;border:0}
+.btn{color:#fff;background:linear-gradient(90deg,var(--ac),var(--ac3));box-shadow:0 10px 30px -8px var(--glow);transition:.2s}
+.btn:hover,.btn:focus-visible{transform:translateY(-2px);filter:brightness(1.12);outline:0}
+.ghost{background:transparent;color:var(--mut);border:1px solid var(--bd)}
+.ghost:hover{color:var(--tx)}
+.scan{display:flex;flex-direction:column;align-items:center;gap:18px;padding:50px 0}
+.sp{width:70px;height:70px;border-radius:50%;border:4px solid var(--bd);border-top-color:var(--ac2);border-right-color:var(--ac3);animation:rot 1s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.res{margin-top:36px}
+.res h2,.sh{font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:-.03em;margin:0 0 6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr));gap:18px;margin-top:20px}
+.card{position:relative;padding:22px;display:flex;flex-direction:column;gap:10px;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s;overflow:hidden;animation:up .6s both}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,0),var(--glow),transparent 70%);opacity:0;transition:.3s;pointer-events:none}
+.card:hover::before{opacity:1}
+.card:hover{box-shadow:0 30px 70px -20px var(--glow),0 0 0 1px var(--ac)}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--ac) 22%,transparent);color:var(--ac)}
+.tag.g{background:color-mix(in srgb,var(--ac2) 18%,transparent);color:var(--ac2)}
+.pct{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1rem;background:conic-gradient(var(--ac2) calc(var(--p)*1%),var(--bd) 0);position:relative}
+.pct::after{content:attr(data-v);position:absolute;inset:5px;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.card h3{margin:0;font-size:1.2rem;line-height:1.25}
+.org{font-size:.85rem;color:var(--mut)}
+.card p{margin:0;color:var(--mut);flex:1}
+.why{font-size:.88rem;display:flex;flex-direction:column;gap:3px}
+.ok{color:var(--ac2)}.wa{color:#fbbf24}
+.st{font-size:.85rem;font-weight:600;padding:7px 11px;border-radius:11px;background:rgba(245,158,11,.16);color:#fbbf24}
+details{font-size:.92rem;border-top:1px dashed var(--bd);padding-top:9px}
+summary{cursor:pointer;font-weight:700;color:var(--ac2)}
+details ol{margin:8px 0 0;padding-left:20px;color:var(--mut)}
+.search{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto;padding:8px 10px 8px 20px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--tx);font:inherit;font-size:1.2rem;padding:14px 0}
+.sug,.fl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:8px 16px;font:inherit;font-size:.9rem;cursor:pointer;transition:.2s}
+.chip:hover,.chip:focus-visible{border-color:var(--ac2);outline:0}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.note{margin:50px auto 0;max-width:700px;text-align:center;font-size:.85rem;color:var(--mut)}
+.hid{display:none}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:3px}
+@media(hover:hover) and (pointer:fine){.ring{opacity:1}}
+@media(max-width:620px){nav{flex-direction:column;gap:12px}.msg{gap:10px}.av{width:38px;height:38px}}
+@media(prefers-reduced-motion:reduce){*,.orb{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="grid-bg"></div></div>
+<div class="ring" id="ring"></div>
+<div class="wrap">
+<nav><div class="brand" role="img" aria-label="Becly"><span class="bt">Becly</span><i class="st s1"></i><i class="st s2"></i><i class="tr t1"></i><i class="tr t2"></i><i class="tw" style="left:14%;top:4%"></i><i class="tw" style="left:38%;top:0;animation-delay:.9s"></i><i class="tw" style="left:66%;top:6%;animation-delay:1.7s"></i><i class="tw" style="left:86%;top:12%;animation-delay:2.3s"></i><i class="tw" style="left:28%;top:92%;animation-delay:1.2s"></i><i class="tw" style="left:74%;top:90%;animation-delay:.3s"></i></div>
+<div class="tabs" role="tablist"><button class="on" id="t1" role="tab">🤖 Asistente</button><button id="t2" role="tab">🔎 Explorar todas</button></div></nav>
+<header class="hero"><span class="badge">Becas · Ayudas · Estatales, Andalucía y Madrid</span>
+<h1>Descubre la ayuda que <span>es para ti</span></h1>
+<p>Responde 5 preguntas rápidas y tu asistente te dirá qué ayudas encajan contigo y cómo solicitarlas, sin perderte en webs interminables.</p></header>
+
+<section id="v1"><div class="glass bot" id="bot"></div><div class="res hid" id="res"></div></section>
+
+<section id="v2" class="hid">
+<div class="glass search"><span>🔍</span><input id="q" type="search" placeholder="Busca: alquiler, erasmus, web para mi negocio…" autocomplete="off" aria-label="Buscar"></div>
+<div class="sug" id="sug"></div><div class="fl" id="fl"></div>
+<div style="text-align:center;color:var(--mut)" id="cnt"></div><div class="cards" id="grid"></div>
+</section>
+<p class="note">Herramienta orientativa e independiente, sin vinculación con ninguna administración. Los resultados no garantizan la concesión: importes, plazos y requisitos cambian en cada convocatoria, confírmalos siempre en la web oficial.</p>
+</div>
+<script>
+const D=[
+{t:"Becas generales de estudios",o:"Ministerio de Educación, FP y Deportes",p:["Estudiante"],c:"Estudios",a:"Nacional",g:["est","form"],age:[16,99],low:1,d:"Matrícula, renta, residencia y cuantía por notas para bachillerato, FP y universidad.",m:"Convocatoria anual, abre en primavera",u:"https://sede.educacion.gob.es",b:"Ir a la solicitud en la sede →",e:"Plazo 2026-27 cerrado (18 mayo 2026). Suele reabrir en primavera.",s:["Entra en la sede electrónica y regístrate si es tu primera vez","Accede con Cl@ve o certificado digital","Rellena el formulario (datos personales, económicos y académicos)","Firma y envía; sigue el estado en «Mis expedientes»"],k:"universidad grado master fp bachillerato matricula residencia estudiar mec"},
+{t:"Erasmus+ movilidad de estudiantes",o:"SEPIE",p:["Estudiante"],c:"Estudios",a:"Europa",g:["est","form"],age:[18,99],d:"Estudia o haz prácticas en otro país europeo con ayuda mensual.",m:"Convocatoria de tu universidad",u:"https://www.sepie.es",h:"Se pide en la oficina de relaciones internacionales de tu universidad o centro, no al SEPIE.",k:"erasmus extranjero europa intercambio practicas viajar"},
+{t:"Becas de colaboración",o:"Ministerio de Educación, FP y Deportes",p:["Estudiante"],c:"Estudios",a:"Nacional",g:["est","form"],age:[18,99],d:"Colabora en departamentos universitarios durante tu último curso.",m:"Convocatoria anual",u:"https://www.becaseducacion.gob.es",k:"universidad departamento colaboracion ultimo curso"},
+{t:"Ayudas FPU para doctorado",o:"Ministerio de Ciencia, Innovación y Universidades",p:["Estudiante"],c:"Investigación",a:"Nacional",g:["inv","est"],age:[21,99],d:"Contratos para hacer la tesis y formarte como personal investigador.",m:"Convocatoria anual",u:"https://www.universidades.gob.es",k:"doctorado tesis investigacion fpu predoctoral"},
+{t:"Becas AECID de posgrado",o:"AECID",p:["Estudiante"],c:"Estudios",a:"Internacional",g:["est","form"],age:[21,99],d:"Becas de cooperación y posgrado para estudiantes españoles y extranjeros.",m:"Según programa",u:"https://www.aecid.es",k:"aecid cooperacion posgrado extranjero"},
+{t:"Bono Alquiler Joven",o:"Ministerio de Vivienda y Agenda Urbana",p:["Particular","Estudiante"],c:"Vivienda",a:"Nacional",g:["viv"],age:[18,35],low:1,d:"Ayuda mensual al alquiler para jóvenes con ingresos limitados.",m:"Hasta 250 €/mes (según convocatoria)",u:"https://www.mivau.gob.es",h:"Lo convoca y gestiona tu comunidad autónoma. Busca en su web oficial de vivienda.",k:"alquiler joven vivienda piso casa emancipacion"},
+{t:"Rehabilitación energética de viviendas",o:"IDAE · Next Generation",p:["Particular"],c:"Vivienda",a:"Nacional",g:["ener","viv"],age:[18,99],d:"Subvenciones para aislamiento, ventanas, aerotermia y placas solares.",m:"Gestión autonómica",u:"https://www.idae.es",h:"Lo gestiona tu comunidad autónoma; consulta su convocatoria vigente.",k:"placas solares aislamiento energia reforma casa ahorro"},
+{t:"Plan MOVES de movilidad eléctrica",o:"IDAE",p:["Particular","Autónomo","Pyme"],c:"Movilidad",a:"Nacional",g:["ener"],age:[18,99],d:"Ayudas por comprar un vehículo eléctrico o instalar un punto de recarga.",m:"Gestión autonómica",u:"https://www.idae.es",h:"Lo gestiona tu comunidad autónoma; a menudo lo tramita el concesionario.",k:"coche electrico recarga cargador vehiculo"},
+{t:"Ingreso Mínimo Vital",o:"Seguridad Social",p:["Particular"],c:"Ayudas sociales",a:"Nacional",g:["fam","emp"],age:[23,99],low:1,d:"Prestación económica para hogares en situación de vulnerabilidad.",m:"Solicitud todo el año",u:"https://sede.seg-social.gob.es",b:"Ir a la sede de la Seguridad Social →",s:["Accede a la sede con Cl@ve o certificado","Busca el trámite «Ingreso Mínimo Vital»","Rellena la solicitud online o pide cita previa"],k:"imv vulnerabilidad renta ingresos familia prestacion"},
+{t:"Prestación por desempleo",o:"SEPE",p:["Particular"],c:"Empleo",a:"Nacional",g:["emp"],age:[16,99],d:"Paro y subsidios para quien ha perdido su trabajo.",m:"Solicitud con cita previa",u:"https://sede.sepe.gob.es",b:"Ir a la sede del SEPE →",s:["Pide cita previa o accede con Cl@ve","Elige la prestación o subsidio que te corresponde","Aporta la documentación que te pidan"],k:"paro desempleo subsidio trabajo parado"},
+{t:"Subsidio para mayores de 52",o:"SEPE",p:["Particular"],c:"Empleo",a:"Nacional",g:["emp"],age:[52,99],low:1,d:"Subsidio para desempleados mayores de 52 años que han agotado el paro.",m:"Solicitud con cita previa",u:"https://sede.sepe.gob.es",b:"Ir a la sede del SEPE →",s:["Pide cita previa en el SEPE","Presenta la solicitud y la documentación","Cumple los requisitos de rentas y cotización"],k:"mayores 52 subsidio paro senior"},
+{t:"Prestación por nacimiento y cuidado del menor",o:"Seguridad Social",p:["Particular"],c:"Familia",a:"Nacional",g:["fam"],age:[18,60],d:"Subsidio durante el permiso por nacimiento, adopción o acogimiento.",m:"Solicitud tras el nacimiento",u:"https://sede.seg-social.gob.es",b:"Ir a la sede de la Seguridad Social →",s:["Accede a la sede con Cl@ve o certificado","Busca «Nacimiento y cuidado de menor»","Presenta la solicitud online"],k:"bebe hijo paternidad maternidad permiso familia"},
+{t:"Capitalización del paro (pago único)",o:"SEPE",p:["Autónomo"],c:"Emprender",a:"Nacional",g:["emprender","fin"],age:[18,99],d:"Cobra el paro de golpe para invertir en tu negocio o darte de alta.",m:"Antes de iniciar la actividad",u:"https://sede.sepe.gob.es",b:"Ir a la sede del SEPE →",s:["Comprueba que tienes paro pendiente de cobrar","Solicítalo antes de empezar la actividad","Aporta tu plan de negocio o justificantes"],k:"pago unico paro capitalizar emprender autonomo"},
+{t:"Tarifa plana para autónomos",o:"Seguridad Social",p:["Autónomo"],c:"Emprender",a:"Nacional",g:["emprender"],age:[18,99],d:"Cuota reducida durante el primer año como autónomo.",m:"Se aplica en el alta",u:"https://sede.seg-social.gob.es",b:"Ir a la sede de la Seguridad Social →",s:["Date de alta en Hacienda (modelo 036/037)","Haz el alta en el RETA","La cuota reducida se aplica si cumples los requisitos"],k:"autonomo alta cuota emprender freelance empezar"},
+{t:"Kit Digital",o:"Red.es · Acelera Pyme",p:["Pyme","Autónomo"],c:"Digitalización",a:"Nacional",g:["dig"],age:[18,99],d:"Bono para web, tienda online, CRM, factura electrónica o ciberseguridad.",m:"Bono según tamaño de empresa",u:"https://sede.red.gob.es",b:"Ir a la sede de Red.es →",e:"Estado variable según segmento: comprueba que haya convocatoria abierta.",s:["Regístrate en AceleraPyme y haz el test de autodiagnóstico","Elige solución y agente digitalizador","Presenta la solicitud en la sede con certificado o Cl@ve"],k:"web pagina tienda ecommerce digital redes sociales crm negocio"},
+{t:"Líneas de financiación ICO",o:"Instituto de Crédito Oficial",p:["Pyme","Autónomo"],c:"Financiación",a:"Nacional",g:["fin","emprender"],age:[18,99],d:"Préstamos con condiciones ventajosas para inversión y liquidez.",m:"Según línea vigente",u:"https://www.ico.es",h:"No se pide al ICO: la tramitas en tu banco con la línea ICO vigente.",k:"prestamo credito banco inversion liquidez dinero"},
+{t:"Financiación ENISA para emprendedores",o:"ENISA",p:["Pyme","Autónomo"],c:"Financiación",a:"Nacional",g:["fin","emprender"],age:[18,99],d:"Préstamos participativos para jóvenes emprendedores y pymes innovadoras.",m:"Ventanilla abierta",u:"https://www.enisa.es",h:"Se solicita online en la web de ENISA con tu plan de negocio.",k:"prestamo emprendedor joven startup participativo"},
+{t:"Ayudas a la innovación y el I+D (CDTI)",o:"CDTI",p:["Pyme"],c:"Innovación",a:"Nacional",g:["inv","fin","dig"],age:[18,99],d:"Financiación para proyectos de I+D+i y empresas tecnológicas.",m:"Convocatorias durante el año",u:"https://www.cdti.es",k:"innovacion id startup tecnologia neotec desarrollo"},
+{t:"ICEX Next · exportar",o:"ICEX",p:["Pyme"],c:"Internacionalización",a:"Nacional",g:["fin"],age:[18,99],d:"Apoyo económico y asesoramiento para vender en el extranjero.",m:"Según convocatoria",u:"https://www.icex.es",k:"exportar internacionalizar extranjero vender fuera"},
+{t:"Formación bonificada para plantillas",o:"FUNDAE",p:["Pyme","Autónomo"],c:"Empleo",a:"Nacional",g:["form","emp"],age:[18,99],d:"Forma a tu plantilla y recupera el coste en las cuotas sociales.",m:"Crédito anual por empresa",u:"https://www.fundae.es",k:"formacion cursos trabajadores plantilla empleados"},
+{t:"Ayudas y becas de la Junta de Andalucía",o:"Junta de Andalucía",p:["Particular","Estudiante","Pyme","Autónomo"],c:"General",a:"Andalucía",r:"and",g:["est","emp","viv","emprender","fam"],age:[0,99],d:"Portal autonómico con ayudas para estudios, empleo, vivienda y empresas.",m:"Según convocatoria",u:"https://www.juntadeandalucia.es",k:"andalucia junta autonomica comunidad"},
+{t:"Beca 6000",o:"Consejería de Educación · Junta de Andalucía",p:["Estudiante"],c:"Estudios",a:"Andalucía",r:"and",g:["est","form"],age:[16,25],low:1,d:"Ayuda de 6.000 € para que alumnado de Bachillerato o FP de Grado Medio con renta limitada y requisitos académicos siga estudiando.",m:"Convocatoria anual por curso",u:"https://www.juntadeandalucia.es/boja/2025/234/1",b:"Ver convocatoria oficial (BOJA) →",h:"Pregunta en tu centro o en la web de Educación de la Junta cuándo abre la del próximo curso.",k:"beca 6000 bachillerato fp grado medio permanencia"},
+{t:"Gratuidad de libros de texto",o:"Consejería de Educación · Junta de Andalucía",p:["Particular","Estudiante"],c:"Educación",a:"Andalucía",r:"and",g:["est","fam"],age:[0,99],d:"Libros de texto gratuitos en la enseñanza obligatoria de centros públicos y concertados.",m:"Curso 2026-27 con 50 M€ de presupuesto",u:"https://www.juntadeandalucia.es",b:"Ir al portal de la Junta →",h:"Se gestiona a través del centro educativo. Busca «Gratuidad de libros de texto» en la web de Educación.",k:"libros texto gratis colegio instituto cheque material"},
+{t:"Beca Andalucía Segunda Oportunidad",o:"Consejería de Educación · Junta de Andalucía",p:["Estudiante"],c:"Estudios",a:"Andalucía",r:"and",g:["est","form"],age:[18,99],low:1,d:"Ayuda para retomar los estudios y volver al sistema educativo.",m:"Convocatoria anual",u:"https://www.juntadeandalucia.es",b:"Ir al portal de la Junta →",h:"Consulta requisitos y plazos en la web de Educación de la Junta.",k:"segunda oportunidad retomar estudios abandono"},
+{t:"Cuota Cero para autónomos",o:"Consejería de Empleo · Junta de Andalucía",p:["Autónomo"],c:"Emprender",a:"Andalucía",r:"and",g:["emprender"],age:[18,99],d:"La Junta te devuelve las cuotas a la Seguridad Social de los primeros 12 meses si estás en la tarifa plana estatal.",m:"Se pide online al cumplir cada año de alta",u:"https://www.juntadeandalucia.es",b:"Ir al portal de la Junta →",e:"Una fuente indicaba convocatoria hasta septiembre de 2026: verifica que siga abierta.",h:"Se tramita en la sede electrónica de la Consejería de Empleo, Empresa y Trabajo Autónomo.",k:"cuota cero tarifa plana autonomo andalucia devolucion cuotas"},
+{t:"Ayudas al inicio de actividad (autónomos)",o:"Consejería de Empleo · Junta de Andalucía",p:["Autónomo"],c:"Emprender",a:"Andalucía",r:"and",g:["emprender","fin"],age:[18,99],d:"Subvención para gastos de inicio y consolidación de nuevos autónomos andaluces; compatible con la Cuota Cero.",m:"Cuantía según convocatoria",u:"https://www.juntadeandalucia.es",b:"Ir al portal de la Junta →",h:"Verifica la convocatoria vigente en la web de Empleo de la Junta.",k:"inicio actividad subvencion nuevos autonomos andalucia"},
+{t:"Becas de comedor escolar",o:"Comunidad de Madrid",p:["Particular","Estudiante"],c:"Educación",a:"Madrid",r:"mad",g:["est","fam"],age:[0,99],low:1,d:"Ayuda para el comedor en Infantil, Primaria y ESO en centros con fondos públicos, con límite de renta per cápita.",m:"Convocatoria principal en primavera",u:"https://sede.comunidad.madrid/ayudas-becas-subvenciones/becas-comedor-escolar-2026-2027",b:"Ir a la solicitud en la sede →",e:"El segundo plazo de 2026-27 terminó el 16 de noviembre (según prensa).",s:["Entra en la sede de la Comunidad de Madrid","Identifícate con firma electrónica reconocida","Rellena la solicitud o preséntala en el colegio"],k:"comedor escolar colegio comida infantil primaria eso"},
+{t:"Ayudas de desayuno escolar",o:"Comunidad de Madrid",p:["Particular","Estudiante"],c:"Educación",a:"Madrid",r:"mad",g:["est","fam"],age:[0,99],low:1,d:"Ayuda para el desayuno escolar del curso 2026-27. Consulta requisitos en la ficha oficial.",m:"Según convocatoria",u:"https://sede.comunidad.madrid/ayudas-becas-subvenciones/ayudas-desayuno-escolar-2026-2027",b:"Ver la ficha en la sede →",k:"desayuno escolar colegio"},
+{t:"Programa ACCEDE de libros de texto",o:"Comunidad de Madrid",p:["Particular","Estudiante"],c:"Educación",a:"Madrid",r:"mad",g:["est","fam"],age:[0,99],d:"Préstamo gratuito de libros de texto y material curricular en centros sostenidos con fondos públicos.",m:"Se gestiona cada curso",u:"https://www.comunidad.madrid/servicios/educacion",b:"Ir a Educación Madrid →",h:"Se solicita a través de tu centro educativo.",k:"libros texto prestamo accede colegio material"},
+{t:"Becas de estudio de Madrid (Bachillerato, FP y universidad)",o:"Comunidad de Madrid",p:["Estudiante"],c:"Estudios",a:"Madrid",r:"mad",g:["est","form"],age:[15,99],d:"Becas autonómicas para Bachillerato, FP de Grado Medio y Superior y estudios universitarios.",m:"Convocatorias anuales",u:"https://www.comunidad.madrid/servicios/educacion",b:"Ir a Becas y ayudas Madrid →",h:"Elige tu etapa en el apartado «Becas y ayudas» de la web de Educación.",k:"bachillerato fp universidad beca madrid grado superior"},
+{t:"Becas de Excelencia",o:"Comunidad de Madrid",p:["Estudiante"],c:"Estudios",a:"Madrid",r:"mad",g:["est"],age:[15,99],d:"Becas para estudiantes con rendimiento académico sobresaliente (más de 3.000 en el curso 2026-27).",m:"Convocatoria anual",u:"https://www.comunidad.madrid/servicios/educacion",b:"Ir a Educación Madrid →",k:"excelencia notas expediente brillante"},
+{t:"Tarifa Cero para nuevos autónomos",o:"Comunidad de Madrid",p:["Autónomo"],c:"Emprender",a:"Madrid",r:"mad",g:["emprender"],age:[18,99],d:"La Comunidad te devuelve las cuotas a la Seguridad Social del primer año como autónomo.",m:"Plazo permanente: se pide en los 3 meses posteriores a cada año",u:"https://sede.comunidad.madrid/ayudas-becas-subvenciones",b:"Ir a la sede de Madrid →",s:["Date de alta en el RETA con tarifa plana","Al cumplir el periodo, entra en la sede de la Comunidad","Busca «Tarifa Cero» y pulsa Tramitar"],k:"tarifa cero cuota cero autonomo madrid devolucion cuotas"},
+{t:"Incentivos a la contratación de desempleados",o:"Comunidad de Madrid",p:["Pyme","Autónomo"],c:"Empleo",a:"Madrid",r:"mad",g:["emp","fin"],age:[18,99],d:"Ayudas para empresas y autónomos que contraten de forma indefinida a personas desempleadas.",m:"Según convocatoria",u:"https://sede.comunidad.madrid/ayudas-becas-subvenciones/ayudas-fomento-empleo-desempleados",b:"Ver la ficha en la sede →",k:"contratar contratacion indefinida desempleados empleo empresa"},
+{t:"Ayudas y becas de la Comunidad de Madrid",o:"Comunidad de Madrid",p:["Particular","Estudiante","Pyme","Autónomo"],c:"General",a:"Madrid",r:"mad",g:["est","emp","fam","emprender"],age:[0,99],d:"Catálogo oficial de ayudas, becas y subvenciones de la Comunidad de Madrid.",m:"Actualizado por la Comunidad",u:"https://sede.comunidad.madrid/ayudas-becas-subvenciones",b:"Ver catálogo de la sede →",k:"madrid comunidad autonomica catalogo"},
+{t:"Base de Datos Nacional de Subvenciones",o:"Intervención General del Estado",p:["Particular","Estudiante","Pyme","Autónomo"],c:"General",a:"Nacional",g:[],age:[0,99],d:"El registro oficial de todas las convocatorias públicas del país.",m:"Actualizado a diario",u:"https://www.infosubvenciones.gob.es",k:"todas subvenciones convocatorias registro oficial bdns"}
+];
+const N=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const $=id=>document.getElementById(id);
+const Q=[
+{k:"p",q:"¿Quién eres?",h:"Elige el perfil que mejor te describe.",o:[["Estudiante","🎓 Estudiante","Bachillerato, FP o universidad"],["Particular","🏠 Particular","Persona o familia"],["Autónomo","💼 Autónomo","Trabajo por cuenta propia"],["Pyme","🏢 Pyme","Empresa pequeña o mediana"]]},
+{k:"age",q:"¿Cuántos años tienes?",h:"Muchas ayudas tienen límites de edad.",o:[[17,"Menos de 18"],[22,"18 – 25"],[30,"26 – 35"],[45,"36 – 54"],[60,"55 o más"]]},
+{k:"g",multi:1,q:"¿Qué necesitas conseguir?",h:"Puedes marcar varias opciones.",o:[["est","📚 Estudiar"],["inv","🔬 Investigar"],["viv","🔑 Vivienda o alquiler"],["emp","🧑‍💼 Empleo o paro"],["emprender","🚀 Emprender"],["dig","💻 Digitalizar mi negocio"],["fin","💶 Financiación"],["ener","⚡ Energía o coche eléctrico"],["fam","👨‍👩‍👧 Familia"],["form","🎯 Formación"]]},
+{k:"inc",q:"¿Cómo son los ingresos de tu hogar o negocio?",h:"Solo para filtrar ayudas con límite de renta. No se guarda nada.",o:[["low","Ajustados"],["mid","Medios"],["high","Holgados"],["na","Prefiero no decirlo"]]},
+{k:"reg",q:"¿Dónde vives?",h:"Algunas ayudas son autonómicas.",o:[["and","📍 Andalucía"],["mad","📍 Madrid"],["otra","🗺️ Otra comunidad"]]}
+];
+let A={g:[]},step=0;
+const bot=$("bot");
+function ask(){
+ const s=Q[step];
+ bot.innerHTML=`<div class="prog"><b style="width:${step/Q.length*100}%"></b></div><div class="msg"><div class="av">🤖</div><div><div class="q">${s.q}</div><p class="hint">${s.h}</p></div></div><div class="opts">${s.o.map((o,i)=>`<button class="opt${s.multi&&A.g.includes(o[0])?" on":""}" data-i="${i}">${o[1]||o[0]}${o[2]?`<small>${o[2]}</small>`:""}</button>`).join("")}</div><div class="act"><button class="ghost" id="back" ${step?"":"disabled style=opacity:.4"}>← Atrás</button>${s.multi?`<button class="btn" id="nx">Continuar →</button>`:""}</div>`;
+ bot.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const v=s.o[b.dataset.i][0];if(s.multi){A.g=A.g.includes(v)?A.g.filter(x=>x!==v):[...A.g,v];b.classList.toggle("on")}else{A[s.k]=v;next()}});
+ if(s.multi)$("nx").onclick=next;
+ $("back").onclick=()=>{if(step){step--;ask()}};
+}
+function next(){step++;if(step<Q.length)ask();else scan()}
+function scan(){
+ bot.innerHTML=`<div class="scan"><div class="sp"></div><div class="q">Analizando cientos de requisitos…</div><p class="hint">Cruzando tu perfil con las ayudas disponibles</p></div>`;
+ setTimeout(show,1700);
+}
+function match(x){
+ if(!x.p.includes(A.p))return null;
+ if(x.r&&x.r!==A.reg)return null;
+ let s=45,ok=[],wa=[];
+ const [mn,mx]=x.age;
+ if(A.age<mn||A.age>mx+0){if(!(A.age>=mn-4&&A.age<=mx+4&&mn>0))return null;wa.push("Revisa el requisito de edad")}else if(mn>0||mx<99){s+=12;ok.push("Encaja con tu edad")}
+ const hit=x.g.filter(v=>A.g.includes(v)).length;
+ if(hit){s+=25+Math.min(hit-1,2)*8;ok.push("Coincide con lo que necesitas")}else if(A.g.length&&x.g.length)s-=22;
+ if(x.low){if(A.inc==="low"){s+=12;ok.push("Pensada para ingresos ajustados")}else if(A.inc==="high"){s-=30;wa.push("Tiene límite de renta: podrías quedar fuera")}else wa.push("Tiene límite de renta: compruébalo")}
+ if(x.r){s+=8;ok.push("Ayuda de tu comunidad")}
+ if(!x.g.length)s=Math.min(s,55);
+ return s<40?null:{x,s:Math.max(8,Math.min(98,Math.round(s))),ok,wa};
+}
+function cardHTML(x,m,i){
+ return `<article class="glass card" style="animation-delay:${i*70}ms"><div class="top"><div class="tags">${x.p.map(p=>`<span class="tag">${p}</span>`).join("")}<span class="tag g">${x.c}</span></div>${m?`<div class="pct" style="--p:${m.s}" data-v="${m.s}%"></div>`:""}</div><h3>${x.t}</h3><div class="org">${x.o} · ${x.a}</div><p>${x.d}</p>${m?`<div class="why">${m.ok.map(r=>`<span class="ok">✔ ${r}</span>`).join("")}${m.wa.map(r=>`<span class="wa">⚠ ${r}</span>`).join("")}</div>`:""}<div class="org">🗓️ ${x.m}</div>${x.e?`<div class="st">⚠️ ${x.e}</div>`:""}${x.s?`<details><summary>Cómo se solicita</summary><ol>${x.s.map(i=>`<li>${i}</li>`).join("")}</ol></details>`:""}${x.h?`<div class="org">ℹ️ ${x.h}</div>`:""}<a class="btn" href="${x.u}" target="_blank" rel="noopener noreferrer">${x.b||"Ver información oficial →"}</a></article>`;
+}
+function show(){
+ const r=D.map(match).filter(Boolean).sort((a,b)=>b.s-a.s);
+ bot.innerHTML=`<div class="prog"><b style="width:100%"></b></div><div class="msg"><div class="av">🤖</div><div><div class="q">${r.length?`He encontrado ${r.length} ${r.length===1?"ayuda":"ayudas"} para ti`:"No he encontrado coincidencias claras"}</div><p class="hint">${r.length?"Ordenadas de mayor a menor encaje. Es orientativo: confirma los requisitos en la web oficial.":"Prueba a cambiar tus respuestas o explora el catálogo completo."}</p></div></div><div class="act"><button class="ghost" id="rs">↺ Empezar de nuevo</button><button class="btn" id="ex">Explorar todas →</button></div>`;
+ $("rs").onclick=()=>{A={g:[]};step=0;$("res").classList.add("hid");ask()};
+ $("ex").onclick=()=>$("t2").click();
+ const rs=$("res");rs.classList.remove("hid");
+ rs.innerHTML=`<div class="cards">${r.map((m,i)=>cardHTML(m.x,m,i)).join("")}</div>`;
+ fx();rs.scrollIntoView({behavior:"smooth",block:"start"});
+}
+/* explorar */
+const S={q:"",p:"Todos"};
+function score(x,ts){let s=0;const T=N(x.t),Dd=N(x.d),K=N(x.k+" "+x.c+" "+x.o);for(const t of ts){let h=0;if(T.includes(t))h+=5;if(K.includes(t))h+=3;if(Dd.includes(t))h+=2;if(!h)return 0;s+=h}return s||1}
+function explore(){
+ $("fl").innerHTML="";["Todos","Estudiante","Particular","Autónomo","Pyme","📍 Andalucía","📍 Madrid"].forEach(v=>{const b=document.createElement("button");b.className="chip"+(S.p===v?" on":"");b.textContent=v;b.onclick=()=>{S.p=v;explore()};$("fl").appendChild(b)});
+ const ts=N(S.q).split(/\s+/).filter(Boolean);
+ const r=D.filter(x=>S.p==="Todos"||x.p.includes(S.p)||"📍 "+x.a===S.p).map(x=>({x,s:ts.length?score(x,ts):1})).filter(o=>o.s>0);
+ if(ts.length)r.sort((a,b)=>b.s-a.s);
+ $("cnt").textContent=r.length+(r.length===1?" resultado":" resultados");
+ $("grid").innerHTML=r.length?r.map((o,i)=>cardHTML(o.x,null,i)).join(""):'<p style="grid-column:1/-1;text-align:center;color:var(--mut)">😕 Nada con eso. Prueba otra palabra.</p>';
+ fx();
+}
+$("q").oninput=e=>{S.q=e.target.value;explore()};
+["alquiler","erasmus","web para mi negocio","coche eléctrico","autónomo","paro","placas solares"].forEach(w=>{const b=document.createElement("button");b.className="chip";b.textContent=w;b.onclick=()=>{$("q").value=w;S.q=w;explore()};$("sug").appendChild(b)});
+$("t1").onclick=()=>{$("t1").classList.add("on");$("t2").classList.remove("on");$("v1").classList.remove("hid");$("v2").classList.add("hid")};
+$("t2").onclick=()=>{$("t2").classList.add("on");$("t1").classList.remove("on");$("v2").classList.remove("hid");$("v1").classList.add("hid");explore();window.scrollTo({top:0,behavior:"smooth"})};
+/* efectos de puntero */
+const fine=matchMedia("(hover:hover) and (pointer:fine)").matches,ring=$("ring");
+if(fine){
+ let tx=0,ty=0,rx=0,ry=0;
+ addEventListener("pointermove",e=>{tx=e.clientX;ty=e.clientY;document.documentElement.style.setProperty("--mx",tx+"px");document.documentElement.style.setProperty("--my",ty+"px")});
+ (function loop(){rx+=(tx-rx)*.18;ry+=(ty-ry)*.18;ring.style.left=rx+"px";ring.style.top=ry+"px";requestAnimationFrame(loop)})();
+ document.addEventListener("pointerover",e=>{const on=e.target.closest("button,a,input,summary");ring.style.width=ring.style.height=on?"58px":"34px";ring.style.background=on?"rgba(34,225,201,.15)":"transparent"});
+}
+function fx(){
+ if(!fine)return;
+ document.querySelectorAll(".card").forEach(c=>{
+  c.onpointermove=e=>{const b=c.getBoundingClientRect(),x=e.clientX-b.left,y=e.clientY-b.top;c.style.setProperty("--x",x+"px");c.style.setProperty("--y",y+"px");c.style.transform=`perspective(900px) rotateX(${(.5-y/b.height)*7}deg) rotateY(${(x/b.width-.5)*9}deg) translateY(-4px)`};
+  c.onpointerleave=()=>{c.style.transform=""};
+ });
+}
+ask();
+</script>
+</body>
+</html>
